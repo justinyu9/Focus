@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 view.startAnimation(translate);
                 view.startAnimation(translate2);
 
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                Intent intent = new Intent(MainActivity.this, Tasks.class);
                 //intent.putExtra("Text 2", edit_text_2.getText().toString());
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);

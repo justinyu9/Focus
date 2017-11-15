@@ -17,7 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondActivity" />
-        <activity android:name=".Temp"></activity>
+        <activity android:name=".Temp" />
+        <activity android:name=".Tasks" />
+        <activity android:name=".Start" />
+        <activity android:name=".input_info"></activity>
     </application>
 
 </manifest>
