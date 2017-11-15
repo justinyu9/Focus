@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Tasks extends AppCompatActivity {
 
@@ -25,7 +27,12 @@ public class Tasks extends AppCompatActivity {
 
 
         StringBuilder text = new StringBuilder();
-
+//        ArrayList<String> taskList = (ArrayList<String>) getIntent().getSerializableExtra("list");
+//        String id = (String) getIntent().getSerializableExtra("taskName");
+//        SharedPreferences reader = getSharedPreferences(id, MODE_PRIVATE);
+//        taskList.add(id);
+//        String[] tasks = new String[taskList.size()];
+//        tasks = taskList.toArray(tasks);
 
         try {
             // open the file for reading we have to surround it with a try
@@ -60,34 +67,36 @@ public class Tasks extends AppCompatActivity {
         String last = text.toString();
         String[] tasks = last.split(" ");
 
-//        for(int i=0; i<tasks.length; i++){
-//            tasks[i] = tasks[i].replace('|','\n');
-//        }
+        for(int i=0; i<tasks.length; i++){
+            tasks[i] = tasks[i].replace('|','\n');
+        }
 
         //listArray = Arrays.asList(tasks);
         /*result=text.getString();
         listArray.add(line);*/
         //listArray.add(getInput);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Tasks.this, android.R.layout.simple_dropdown_item_1line, tasks);
-        ListView show = (ListView) findViewById(R.id.listview1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, tasks);
+        final ListView show = (ListView) findViewById(R.id.listview1);
 
         show.setAdapter(adapter);
-        final String tester = tasks[0];
-        Toast.makeText(Tasks.this, tasks[0], Toast.LENGTH_LONG).show();
         Button myButton = (Button) findViewById(R.id.Add);
         Button myButton2 = (Button) findViewById(R.id.Start);
 
-//        show.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?>adapter, View v, int position){
-//                ItemClicked item = adapter.getItemAtPosition(position);
-//
-//                Intent intent = new Intent(Tasks.this,Start.class);
-//                //based on item add info to intent
-//                startActivity(intent);
-//            }
-//        });
+        show.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SharedPreferences read = getSharedPreferences(show.getItemAtPosition(i).toString(), MODE_PRIVATE);
+                SharedPreferences.Editor taskAtHand = getSharedPreferences("taskAtHand", MODE_PRIVATE).edit();
+                taskAtHand.putString("taskAtHand", show.getItemAtPosition(i).toString());
+                String text = read.getString("time", "No name defined");
+                taskAtHand.putString("time", text);
+                taskAtHand.apply();
+                Intent intent = new Intent(Tasks.this, Start.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         myButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
@@ -103,9 +112,6 @@ public class Tasks extends AppCompatActivity {
         myButton2.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
-                SharedPreferences read = getSharedPreferences("Time", MODE_PRIVATE);
-                String s = read.getString(tester, "No name defined");
-                Toast.makeText(Tasks.this, s, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Tasks.this, SecondActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 //intent.putExtra("Text 2", edit_text_2.getText().toString());

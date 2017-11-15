@@ -31,7 +31,7 @@ public class input_info extends AppCompatActivity {
 
         //create a list of items for the spinner.
         String[] items3 = new String[]{"Pick Type","Class","Work","Errands","Custom"};
-        String[] items = new String[]{"Takes","less than 30 Minutes","an hour","1.5 hours","2 hours","2.5 hours","3 hours","3.5 hours","4 hours","4.5 hours","5 hours","6 hours","7 hours","8 hours","9 hours","10 hours"};
+        String[] items = new String[]{"Takes","5 minutes","10 minutes","15 minutes","30 minutes","1 hour","1.5 hours","2 hours","CUSTOM"};
         String[] items1 = new String[]{"Due in","1 Day","2-3 Days","a week","2-3 weeks","a month","2 months","a year",};
         String[] items2 = new String[]{"Pick Reminder","10 min before","30 min before","1 hr before","2 hrs before","Custom"};
         String[] items4 = new String[]{"1 = easy, 10 = hard ","1","2","3","4","5", "6", "7", "8", "9", "10"};
@@ -131,12 +131,10 @@ public class input_info extends AppCompatActivity {
                     e.putString("deleted", "False");
                     e.apply();
 
-                    SharedPreferences read = getSharedPreferences(taskName, MODE_PRIVATE);
-                    String s = read.getString("time", "No name defined");
-                    Toast.makeText(input_info.this, s, Toast.LENGTH_LONG).show();
                     // finish(); //return to home
                     Intent intent = new Intent(input_info.this, Tasks.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("taskName", taskName);
                     //intent.putExtra("Text 2", edit_text_2.getText().toString());
                     Bundle bundle = new Bundle();
                     intent.putExtras(bundle);
