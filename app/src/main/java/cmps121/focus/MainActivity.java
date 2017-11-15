@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         final Animation translate = AnimationUtils.loadAnimation(this,R.anim.translate);
         final Animation translate2 = AnimationUtils.loadAnimation(this,R.anim.translate2);
 
-        Button myButton =  findViewById(R.id.button);
+        Button myButton = (Button) findViewById(R.id.button);
         myButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
