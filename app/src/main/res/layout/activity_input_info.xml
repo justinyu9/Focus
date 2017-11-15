@@ -5,39 +5,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cmps121.focus.input_info"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type:"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView5"
-        android:layout_marginLeft="15dp"
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="62dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="312dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="70dp" />
+        app:srcCompat="@drawable/importanticon" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reminder:"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="62dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="6dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/difficultyicon" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="62dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="173dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="388dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView4"
-        android:layout_marginLeft="13dp" />
+        app:srcCompat="@drawable/duedateicon" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="62dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="124dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/timeicon"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="62dp"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="68dp"
+        android:foregroundGravity="left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/typeicon"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="62dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="372dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/remindicon" />
 
     <EditText
         android:id="@+id/taskName"
         android:layout_width="349dp"
         android:layout_height="47dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:focusedByDefault="true"
@@ -45,212 +83,153 @@
         android:inputType="text"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="77dp"
-        android:layout_height="28dp"
-        android:text="hours"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Type:"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/startTime"
-        android:layout_marginLeft="29dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="125dp" />
+        app:layout_constraintEnd_toStartOf="@+id/typeSpin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="388dp"
+        android:text="Reminder:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/reminderSpin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
         android:text="Time:"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:layout_marginTop="125dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView5"
-        android:layout_marginLeft="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/startTime"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DueDate"
+        android:layout_width="43dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="190dp"
+        android:text="Due:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/DueSpinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Difficulty"
+        android:layout_width="93dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="247dp"
+        android:text="Difficulty:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/DifficultSpinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:text="Level of Importance:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/ImportanceSpinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/typeSpin"
         android:layout_width="202dp"
         android:layout_height="33dp"
+        android:layout_marginTop="70dp"
         android:gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/textView3"
-        android:layout_marginLeft="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="70dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/reminderSpin"
         android:layout_width="181dp"
         android:layout_height="27dp"
+        android:layout_marginTop="388dp"
         android:gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/textView2"
-        android:layout_marginLeft="34dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="388dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/startTime"
-        android:layout_width="97dp"
+        android:layout_width="197dp"
         android:layout_height="24dp"
+        android:layout_marginTop="125dp"
         android:gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
-        android:layout_marginLeft="36dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="125dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/DueSpinner"
         android:layout_width="196dp"
         android:layout_height="37dp"
+        android:layout_marginTop="182dp"
         android:gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/DueDate"
-        android:layout_marginLeft="54dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="182dp" />
-
-    <Button
-        android:id="@+id/doneButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done!"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="85dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="59dp"
-        android:layout_height="48dp"
-        app:srcCompat="@drawable/timeicon"
-        app:layout_constraintRight_toLeftOf="@+id/textView4"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="125dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="54dp"
-        android:layout_height="52dp"
-        android:layout_marginHorizontal="5dp"
-        app:srcCompat="@drawable/typeicon"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="55dp" />
-
-    <TextView
-        android:id="@+id/DueDate"
-        android:layout_width="43dp"
-        android:layout_height="29dp"
-        android:text="Due:"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView"
-        android:layout_marginLeft="13dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="190dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="56dp"
-        android:layout_height="61dp"
-        app:srcCompat="@drawable/duedateicon"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="173dp" />
-
-    <TextView
-        android:id="@+id/Difficulty"
-        android:layout_width="93dp"
-        android:layout_height="36dp"
-        android:text="Difficulty:"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView2"
-        android:layout_marginLeft="14dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="247dp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="55dp"
-        android:layout_height="56dp"
-        app:srcCompat="@drawable/difficultyicon"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/DueDate"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/DifficultSpinner"
         android:layout_width="180dp"
         android:layout_height="33dp"
-        app:layout_constraintLeft_toRightOf="@+id/Difficulty"
-        android:layout_marginLeft="19dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="247dp" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        app:srcCompat="@drawable/importanticon"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="312dp" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
-        android:text="Level of Importance:"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="312dp" />
+        android:layout_marginTop="247dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Difficulty"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/ImportanceSpinner"
-        android:layout_width="65dp"
-        android:layout_height="35dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView7"
-        android:layout_marginLeft="65dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="312dp" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="56dp"
-        android:layout_height="57dp"
-        app:srcCompat="@drawable/remindicon"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="372dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_width="127dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="312dp"
+        android:textAlignment="gravity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/Cancel"
@@ -264,6 +243,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.982" />
+
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginTop="8dp"
+        android:text="Done!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
 
 </android.support.constraint.ConstraintLayout>

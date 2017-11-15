@@ -93,6 +93,7 @@ public class Tasks extends AppCompatActivity {
             @Override
             public void onClick(android.view.View view) {
                 Intent intent = new Intent(Tasks.this, input_info.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 //intent.putExtra("Text 2", edit_text_2.getText().toString());
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);
@@ -102,10 +103,11 @@ public class Tasks extends AppCompatActivity {
         myButton2.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
-                SharedPreferences read = getSharedPreferences("Time", MODE_APPEND);
+                SharedPreferences read = getSharedPreferences("Time", MODE_PRIVATE);
                 String s = read.getString(tester, "No name defined");
                 Toast.makeText(Tasks.this, s, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Tasks.this, Start.class);
+                Intent intent = new Intent(Tasks.this, SecondActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 //intent.putExtra("Text 2", edit_text_2.getText().toString());
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);

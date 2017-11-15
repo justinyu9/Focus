@@ -121,36 +121,22 @@ public class input_info extends AppCompatActivity {
                     }
 
 
-                    SharedPreferences.Editor editor = getSharedPreferences("TaskName", MODE_APPEND).edit();
-                    editor.putString(taskName, taskName);
-                    editor.apply();
-                    editor = getSharedPreferences("Time", MODE_APPEND).edit();
-                    editor.putString(taskName, startTime);
-                    editor.apply();
-                    editor = getSharedPreferences("DueDate", MODE_APPEND).edit();
-                    editor.putString(taskName, dueTime);
-                    editor.apply();
-                    editor = getSharedPreferences("Type", MODE_APPEND).edit();
-                    editor.putString(taskName, type);
-                    editor.apply();
-                    editor = getSharedPreferences("Difficulty", MODE_APPEND).edit();
-                    editor.putString(taskName, difficulty);
-                    editor.apply();
-                    editor = getSharedPreferences("Importance", MODE_APPEND).edit();
-                    editor.putString(taskName, importance);
-                    editor.apply();
-                    editor = getSharedPreferences("Reminder", MODE_APPEND).edit();
-                    editor.putString(taskName, remindTime);
-                    editor.apply();
-                    editor = getSharedPreferences("Deleted", MODE_APPEND).edit();
-                    editor.putString(taskName, "False");
-                    editor.apply();
+                    SharedPreferences.Editor e = getSharedPreferences(taskName, MODE_PRIVATE).edit();
+                    e.putString("time", startTime);
+                    e.putString("dueDate", dueTime);
+                    e.putString("type", type);
+                    e.putString("difficulty", difficulty);
+                    e.putString("importance", importance);
+                    e.putString("reminder", remindTime);
+                    e.putString("deleted", "False");
+                    e.apply();
 
-                    SharedPreferences read = getSharedPreferences("Time", MODE_APPEND);
-                    String s = read.getString(taskName, "No name defined");
+                    SharedPreferences read = getSharedPreferences(taskName, MODE_PRIVATE);
+                    String s = read.getString("time", "No name defined");
                     Toast.makeText(input_info.this, s, Toast.LENGTH_LONG).show();
                     // finish(); //return to home
                     Intent intent = new Intent(input_info.this, Tasks.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     //intent.putExtra("Text 2", edit_text_2.getText().toString());
                     Bundle bundle = new Bundle();
                     intent.putExtras(bundle);
