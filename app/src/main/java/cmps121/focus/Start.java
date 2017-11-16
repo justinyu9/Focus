@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ public class Start extends AppCompatActivity {
     public CountDownTimer countDownTimer;
     public long ms;
     public long temp;
+    public MyService mService;
     public Random rand = new Random();
     final String pokemon = "pokemon0";
     public StringBuffer sb = new StringBuffer(pokemon);
@@ -72,6 +74,7 @@ public class Start extends AppCompatActivity {
         SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);
         String text = read.getString("taskAtHand", "No name defined");
         String time = read.getString("time", "No name defined");
+        //Toast.makeText(this, String.valueOf(mService.getTime()), Toast.LENGTH_LONG).show();
 
         TextView taskNameTextView = findViewById(R.id.taskName);
         taskNameTextView.setText(text);

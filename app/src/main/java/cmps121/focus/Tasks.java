@@ -92,6 +92,7 @@ public class Tasks extends AppCompatActivity {
                 String text = read.getString("time", "No name defined");
                 taskAtHand.putString("time", text);
                 taskAtHand.apply();
+                startService(new Intent(Tasks.this, MyService.class));
                 Intent intent = new Intent(Tasks.this, Start.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -120,5 +121,13 @@ public class Tasks extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void startService(View view){
+        Intent intent = new Intent(this,MyService.class);
+        startService(intent);
+    }
+    public void stopService(View view){
+        Intent intent = new Intent(this,MyService.class);
+        stopService(intent);
     }
 }
