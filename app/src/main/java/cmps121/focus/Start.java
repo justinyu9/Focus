@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +22,15 @@ import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.Random;
 
 public class Start extends AppCompatActivity {
     public CountDownTimer countDownTimer;
     public long ms;
     public long temp;
+    public Random rand = new Random();
+    final String pokemon = "pokemon0";
+    public StringBuffer sb = new StringBuffer(pokemon);
 
     public void notificationCaller() {
         Intent intent = new Intent(this, Start.class);
@@ -82,9 +87,10 @@ public class Start extends AppCompatActivity {
         }
         else {
             ms = (long) timeInt * 3600000;
-            Toast.makeText(this, String.valueOf(ms), Toast.LENGTH_LONG).show();
             temp = (long) timeInt * 3600000;
         }
+        final ProgressBar countdownProgress = findViewById(R.id.progressBar);
+        countdownProgress.setMax((int) temp);
             countDownTimer = new CountDownTimer(ms, 1000) {
                 @Override
                 public void onTick(long time) {
@@ -103,19 +109,26 @@ public class Start extends AppCompatActivity {
                     if(ms > 0){
                         ms -= 1000;
                         updateTimer();
+                        countdownProgress.setProgress((int)ms);
                     }
                     else{
-                        ms = 0;
-                        updateTimer();
-                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                        pokemonUpdate.setImageResource(R.drawable.charmander);
+                        onFinish();
+                        countDownTimer.cancel();
                     }
 
                 }
 
                 @Override
                 public void onFinish() {
-
+                    ms = 0;
+                    updateTimer();
+                    countdownProgress.setProgress((int)ms);
+                    ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+                    int n = rand.nextInt(3)+1;
+                    sb.append(String.valueOf(n));
+                    int id = getResources().getIdentifier(sb.toString(), "drawable", getPackageName());
+                    pokemonUpdate.setImageResource(id);
+                    Toast.makeText(Start.this, "Pokemon added to Collections!", Toast.LENGTH_LONG).show();
                 }
             }.start();
 

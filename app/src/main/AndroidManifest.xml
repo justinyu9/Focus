@@ -20,7 +20,8 @@
         <activity android:name=".Temp" />
         <activity android:name=".Tasks" />
         <activity android:name=".Start" />
-        <activity android:name=".input_info"></activity>
+        <activity android:name=".input_info" />
+        <activity android:name=".pokeCollection"></activity>
     </application>
 
 </manifest>
