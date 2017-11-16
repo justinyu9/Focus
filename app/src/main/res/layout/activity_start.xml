@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorButtonNormal"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:paddingBottom="10dp"
+        android:shadowColor="@android:color/background_dark"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="36sp"
@@ -23,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/holo_blue_dark"
+            android:paddingBottom="10dp"
             android:text="Time:"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -32,8 +40,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/holo_blue_dark"
+            android:paddingBottom="10dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="24sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:hint="00:00:00"
+        android:textAlignment="center"
+        android:textSize="48sp" />
+
+    <ImageView
+        android:id="@+id/egg_pokemon"
+        android:layout_width="205dp"
+        android:layout_height="208dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@drawable/pokemon_egg" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp" />
+
+    <Button
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="skip5"
+        android:text="Skip 5" />
+
 </LinearLayout>

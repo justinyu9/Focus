@@ -37,7 +37,7 @@ public class Tasks extends AppCompatActivity {
         try {
             // open the file for reading we have to surround it with a try
 
-            InputStream inStream = openFileInput("Test1.txt");//open the text file for reading
+            InputStream inStream = openFileInput("Test3.txt");//open the text file for reading
 
             // if file the available for reading
             if (inStream != null) {
