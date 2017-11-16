@@ -39,9 +39,6 @@ public class MyService extends Service {
             ms = (long) timeInt * 3600000;
             temp = (long) timeInt * 3600000;
         }
-        Toast.makeText(this, String.valueOf(ms), Toast.LENGTH_LONG).show();
-
-        Toast.makeText(this, String.valueOf(temp), Toast.LENGTH_LONG).show();
         countDownTimer = new CountDownTimer(ms, 1000) {
             @Override
             public void onTick(long time) {
@@ -60,7 +57,6 @@ public class MyService extends Service {
     }
     public void updateTimer(long x){
         SharedPreferences.Editor edit = getSharedPreferences("Service", MODE_PRIVATE).edit();
-        String answer = String.valueOf(x);
         edit.putLong("Service",x);
         edit.apply();
     }
@@ -68,13 +64,11 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy(){
-        Toast.makeText(this, "Service Ended", Toast.LENGTH_LONG).show();
 
     }
 
@@ -82,5 +76,6 @@ public class MyService extends Service {
     public IBinder onBind(Intent intent){
         return null;
     }
+
 
 }

@@ -1,5 +1,7 @@
 package cmps121.focus;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -92,7 +94,13 @@ public class Tasks extends AppCompatActivity {
                 String text = read.getString("time", "No name defined");
                 taskAtHand.putString("time", text);
                 taskAtHand.apply();
-                startService(new Intent(Tasks.this, MyService.class));
+                if(isMyServiceRunning(MyService.class)){
+                    stopService(new Intent(Tasks.this, MyService.class));
+                    startService(new Intent(Tasks.this, MyService.class));
+                }
+                else {
+                    startService(new Intent(Tasks.this, MyService.class));
+                }
                 Intent intent = new Intent(Tasks.this, Start.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -129,5 +137,14 @@ public class Tasks extends AppCompatActivity {
     public void stopService(View view){
         Intent intent = new Intent(this,MyService.class);
         stopService(intent);
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
