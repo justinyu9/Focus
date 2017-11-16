@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.OutputStreamWriter;
 
 import static android.content.ContentValues.TAG;
 
@@ -45,16 +48,21 @@ public class MyService extends Service {
                 if(ms > 0){
                     ms -= 1000;
                     Log.i(TAG, String.valueOf(ms));
+                    updateTimer(ms);
                 }
             }
-            public long getTime(){
-                return ms;
-            }
+
             @Override
             public void onFinish() {
 
             }
         }.start();
+    }
+    public void updateTimer(long x){
+        SharedPreferences.Editor edit = getSharedPreferences("Service", MODE_PRIVATE).edit();
+        String answer = String.valueOf(x);
+        edit.putLong("Service",x);
+        edit.apply();
     }
 
 

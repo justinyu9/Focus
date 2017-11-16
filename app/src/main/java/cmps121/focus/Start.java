@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Random;
@@ -94,6 +98,8 @@ public class Start extends AppCompatActivity {
         }
         final ProgressBar countdownProgress = findViewById(R.id.progressBar);
         countdownProgress.setMax((int) temp);
+        ms = getTime();
+
             countDownTimer = new CountDownTimer(ms, 1000) {
                 @Override
                 public void onTick(long time) {
@@ -136,6 +142,11 @@ public class Start extends AppCompatActivity {
             }.start();
 
 
+    }
+    public long getTime(){
+        SharedPreferences reader = getSharedPreferences("Service", MODE_PRIVATE);
+        long time = reader.getLong("Service", 0);
+        return time;
     }
     public void updateTimer(){
         TextView timerView = findViewById(R.id.timerView);
