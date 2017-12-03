@@ -22,6 +22,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,6 +73,20 @@ public class Start extends AppCompatActivity {
         ms -= 300000;
     }
 
+    public void tester(View view){
+        Toast.makeText(Start.this, "Finished!", Toast.LENGTH_LONG).show();
+        SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);
+        String text = read.getString("taskAtHand", "No name defined");
+        SharedPreferences.Editor e = getSharedPreferences(text, MODE_PRIVATE).edit();
+        e.putString("deleted", "true");
+        e.apply();
+        Intent intent = new Intent(Start.this, Tasks.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Bundle bundle = new Bundle();
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     public void goToCollections(View v){
         Intent intent = new Intent(this, Collections.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -107,8 +122,12 @@ public class Start extends AppCompatActivity {
         final ProgressBar countdownProgress = findViewById(R.id.progressBar);
         countdownProgress.setMax((int) temp);
         ms = getTime();
+        final Button myButton = (Button) findViewById(R.id.finished);
+        myButton.setEnabled(false);
 
             countDownTimer = new CountDownTimer(ms, 1000) {
+
+
                 @Override
                 public void onTick(long time) {
                     if(ms < temp/4 && ms > 0){
@@ -129,6 +148,8 @@ public class Start extends AppCompatActivity {
                         countdownProgress.setProgress((int)ms);
                     }
                     else{
+                        myButton.setAlpha(1.0f);
+                        myButton.setEnabled(true);
                         onFinish();
                         countDownTimer.cancel();
                     }

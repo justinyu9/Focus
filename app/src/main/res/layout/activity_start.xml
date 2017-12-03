@@ -114,4 +114,12 @@
             android:text="Collections" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/finished"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:onClick="tester"
+        android:text="Finish!" />
+
 </LinearLayout>
