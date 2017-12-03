@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
@@ -39,7 +40,8 @@ public class Start extends AppCompatActivity {
     final String pokemon = "pokemon0";
     public StringBuffer sb = new StringBuffer(pokemon);
 
-    private Collections collections = new Collections();
+    //public Collections collections = new Collections(new ArrayList<Pokemon>());
+
 
     public void notificationCaller() {
         Intent intent = new Intent(this, Start.class);
