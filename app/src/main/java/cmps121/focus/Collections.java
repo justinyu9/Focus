@@ -15,9 +15,9 @@ public class Collections extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collections);
 
-        Pokemon poke1 = new Pokemon(R.drawable.rsz_pokemon02, "Charmander");
-        Pokemon poke2 = new Pokemon(R.drawable.rsz_pokemon02, "Squirtle");
-        Pokemon poke3 = new Pokemon(R.drawable.rsz_pokemon02, "Bulbasaur");
+        Pokemon poke1 = new Pokemon(R.drawable.pokemon01, "Charmander");
+        Pokemon poke2 = new Pokemon(R.drawable.pokemon02, "Squirtle");
+        Pokemon poke3 = new Pokemon(R.drawable.pokemon03, "Bulbasaur");
 
         pokeList = new ArrayList<Pokemon>();
         pokeList.add(poke1);
