@@ -38,6 +38,8 @@ public class Start extends AppCompatActivity {
     final String pokemon = "pokemon0";
     public StringBuffer sb = new StringBuffer(pokemon);
 
+    private Collections collections = new Collections();
+
     public void notificationCaller() {
         Intent intent = new Intent(this, Start.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -68,6 +70,12 @@ public class Start extends AppCompatActivity {
     }
     public void skip5(View view){
         ms -= 300000;
+    }
+
+    public void goToCollections(View v){
+        Intent intent = new Intent(this, Collections.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override

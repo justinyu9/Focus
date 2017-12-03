@@ -104,10 +104,11 @@
             android:text="Skip 5" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/collectionsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="goToCollections"
             android:padding="10dp"
             android:paddingLeft="25dp"
             android:text="Collections" />
