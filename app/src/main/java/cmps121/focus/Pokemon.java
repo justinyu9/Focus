@@ -5,29 +5,38 @@ package cmps121.focus;
  */
 
 public class Pokemon{
-    int imageId;
-    String pokemonName;
+    int number;
+    String name;
+    String url;
 
-
-    public int getImageId() {
-        return imageId;
+    public String getUrl(){
+        return url;
     }
 
-    public String getPokemonName() {
-        return pokemonName;
+    public void setUrl(String url){
+        this.url = url;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public int getNumber() {
+        String[] urlPartes = url.split("/");
+        return Integer.parseInt(urlPartes[urlPartes.length-1]);
     }
 
-    public void setPokemonName(String pokemonName) {
-        this.pokemonName = pokemonName;
+    public String getName() {
+        return name;
     }
 
-    Pokemon(int imageId, String pokemonName){
-        this.imageId = imageId;
-        this.pokemonName = pokemonName;
-
+    public void setnumber(int number) {
+        this.number = number;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+//    Pokemon(int number, String pokemonName){
+//        this.number = number;
+//        this.pokemonName = pokemonName;
+//
+//    }
 }
