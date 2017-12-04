@@ -22,12 +22,16 @@ public class Pokemon{
         return Integer.parseInt(urlPartes[urlPartes.length-1]);
     }
 
+    public int getID(){
+        return number;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setnumber(int number) {
-        this.number = number;
+    public void setNumber(String number) {
+        this.number = Integer.valueOf(number);
     }
 
     public void setName(String name) {

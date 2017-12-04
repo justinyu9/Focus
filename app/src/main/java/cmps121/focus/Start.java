@@ -39,7 +39,7 @@ public class Start extends AppCompatActivity {
     final String pokemon = "pokemon0";
     public StringBuffer sb = new StringBuffer(pokemon);
 
-    //public Collections collections = new Collections(new ArrayList<Pokemon>());
+    public Collections collections = new Collections();
 
 
     public void notificationCaller() {
@@ -147,6 +147,7 @@ public class Start extends AppCompatActivity {
                     sb.append(String.valueOf(n));
                     int id = getResources().getIdentifier(sb.toString(), "drawable", getPackageName());
                     pokemonUpdate.setImageResource(id);
+                    //collections.obtainData(sb.toString());
                     Toast.makeText(Start.this, "Pokemon added to Collections!", Toast.LENGTH_LONG).show();
                 }
             }.start();
