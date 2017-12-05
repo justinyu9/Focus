@@ -39,7 +39,7 @@ public class Tasks extends AppCompatActivity {
         try {
             // open the file for reading we have to surround it with a try
 
-            InputStream inStream = openFileInput("Test3.txt");//open the text file for reading
+            InputStream inStream = openFileInput("Test4.txt");//open the text file for reading
 
             // if file the available for reading
             if (inStream != null) {
@@ -54,9 +54,16 @@ public class Tasks extends AppCompatActivity {
                 while (( line = buffReader.readLine()) != null) {
                     //buffered reader reads only one line at a time, hence we give a while loop to read all till the text is null
                     //listArray.add(line);
-                    text.append(line);
-                    //to display the text in text line
-                    text.append(" ");
+                    SharedPreferences read = getSharedPreferences(line, MODE_PRIVATE);
+                    String compare = read.getString("deleted", "No named defined");
+                    if(compare.equals("true")){
+
+                    }
+                    else {
+                        text.append(line);
+                        //to display the text in text line
+                        text.append("@#");
+                    }
 
                 }
             }}
@@ -67,7 +74,7 @@ public class Tasks extends AppCompatActivity {
         }
 
         String last = text.toString();
-        String[] tasks = last.split(" ");
+        String[] tasks = last.split("@#");
 
         for(int i=0; i<tasks.length; i++){
             tasks[i] = tasks[i].replace('|','\n');

@@ -96,13 +96,16 @@ public class input_info extends AppCompatActivity {
                         // open myfilename.txt for writing
 
 
-                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test3.txt", MODE_APPEND));
+                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test4.txt", MODE_APPEND));
 
                         // write the contents to the file
                         String temp = taskName;
-
+                        SharedPreferences read = getSharedPreferences(temp, MODE_PRIVATE);
+                        boolean compare = read.contains("deleted");
+                            if(!compare) {
                                 out.write(temp);
-                                out.write(" ");
+                                out.write("\n");
+                            }
 
                         //System.out.print(cells);
 
