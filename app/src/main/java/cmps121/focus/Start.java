@@ -202,33 +202,6 @@ public class Start extends AppCompatActivity {
                         Log.i("POKEMON", p.getAttack());
                         pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()), p.getHp(), p.getAttack(), p.getDefense(), p.getHeight(), p.getWeight());
                     }
-//                    if(getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE) == null){
-//                        SharedPreferences.Editor SFE = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE).edit();
-//                        JSONArray pokeJsonArray = new JSONArray();
-//                        JSONObject pokeJsonObject = new JSONObject();
-//                        try {
-//                            pokeJsonObject.put("name", p.getName());
-//                            pokeJsonObject.put("id", p.getNumber());
-//                            pokeJsonArray.put(pokeJsonObject);
-//                            SFE.putString("pokeJsonString", pokeJsonArray.toString());
-//                            SFE.commit();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    else{
-//                        SharedPreferences pokemonSharedPreferences = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE);
-//                        String pokeJsonString = pokemonSharedPreferences.getString("pokeJsonString", "");
-//                        try {
-//                            JSONArray pokeJsonArray = new JSONArray(pokeJsonString);
-//                            JSONObject pokeJsonObject = new JSONObject();
-//                            pokeJsonObject.put("name", p.getName());
-//                            pokeJsonObject.put("id", p.getNumber());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-                    //collections.obtainData(sb.toString());
                     Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
                 }
             }.start();

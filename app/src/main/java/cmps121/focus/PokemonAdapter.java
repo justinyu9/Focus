@@ -154,6 +154,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                     pokeImageView.setImageDrawable(photoImageView.getDrawable());
                     attack.setText("Attack: " + p.getAttack());
                     pokeInfoName.setText(p.getName());
+                    pokeInfoName.setAllCaps(true);
                     hp.setText("HP: " + p.getHp());
                     height.setText("Height: " + p.getHeight());
                     weight.setText("Weight: " + p.getWeight());
