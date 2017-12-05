@@ -1,6 +1,8 @@
 package cmps121.focus;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 import cmps121.focus.pokeapi.PokeapiService;
 import cmps121.focus.pokeapi.PokemonAnswer;
+import cmps121.focus.pokeapi.PokemonDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,27 +37,24 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 //    GridView gridView;
     RecyclerView recyclerView;
     PokemonAdapter adapter;
+    PokemonDatabase pokemonDatabase;
+    Context context;
+    public ArrayList<Pokemon> pokeList;
     Pokemon p;
-    //public ArrayList<Pokemon> pokeList;
-
-    public Collections() {
+    public Collections(Context context) {
+        this.context = context;
     }
 
     private Retrofit retrofit;
 
-    public void getPokemon(String id) throws ExecutionException, InterruptedException {
-//        fetchPokemon fetch = new fetchPokemon();
-//        fetch.delegate=this;
-//        p = fetch.execute(id).get();
-//
-////        Log.i("POKEMON ON COLLECTIONS.JAVA", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());
-////        while(p==null){
-////            Log.i("POKEMON", "Waiting for pokemon...");
-////        }
-//        if(p!=null){
-//            Log.i("POKEMON", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());;
-//            adapter.addPokemonToGrid(p);
-//        }
+    public Pokemon getPokemon(String id) throws ExecutionException, InterruptedException {
+        fetchPokemon fetch = new fetchPokemon();
+        fetch.delegate=this;
+        Pokemon p = fetch.execute(id).get();
+        if(p==null){
+            Log.i("POKEMON", "Pokemon is null");
+        }
+        return p;
     }
 
 
@@ -71,20 +71,34 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         recyclerView.setLayoutManager(layoutManager);
 
         retrofit = new Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/").addConverterFactory(GsonConverterFactory.create()).build();
+
+        pokeList = new ArrayList<Pokemon>();
+        pokemonDatabase = new PokemonDatabase(context);
+        Cursor res = pokemonDatabase.getAllData();
+        if(res.getCount() == 0){
+            Log.e("POKEMON", "Database is empty");
+        }
+        while(res.moveToNext()){
+            Pokemon pok = new Pokemon();
+            pok.setName(res.getString(0));
+            pok.setNumber(res.getString(1));
+            pokeList.add(pok);
+        }
+        adapter.addListOfPokemons(pokeList);
         //obtainData();
-        fetchPokemon fetchPokemon = new fetchPokemon();
-        fetchPokemon.delegate = this;
-        try {
-            p = fetchPokemon.execute("141").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if(p!=null){
-            Log.i("POKEMON", "Successful");
-            adapter.addPokemonToGrid(p);
-        }
+//        fetchPokemon fetchPokemon = new fetchPokemon();
+//        fetchPokemon.delegate = this;
+//        try {
+//            p = fetchPokemon.execute("141").get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//        if(p!=null){
+//            Log.i("POKEMON", "Successful");
+//            adapter.addPokemonToGrid(p);
+//        }
 
 //        gridView = (GridView) findViewById(R.id.pokemonGrid);
 //        adapter = new PokemonAdapter(this);

@@ -19,6 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -32,6 +38,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+import cmps121.focus.pokeapi.PokemonDatabase;
+
 public class Start extends AppCompatActivity {
     public CountDownTimer countDownTimer;
     public long ms;
@@ -40,8 +48,8 @@ public class Start extends AppCompatActivity {
     public Random rand = new Random();
     final String pokemon = "pokemon0";
     public StringBuffer sb = new StringBuffer(pokemon);
-
-    public Collections collections = new Collections();
+    public PokemonDatabase pokemonDatabase;
+    public Collections collections;
 
 
     public void notificationCaller() {
@@ -100,6 +108,8 @@ public class Start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        collections = new Collections(this);
+        pokemonDatabase = new PokemonDatabase(this);
 
         SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);
         String text = read.getString("taskAtHand", "No name defined");
@@ -165,17 +175,45 @@ public class Start extends AppCompatActivity {
                     updateTimer();
                     countdownProgress.setProgress((int)ms);
                     ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                    int n = rand.nextInt(3)+1;
-                    sb.append(String.valueOf(n));
-                    int id = getResources().getIdentifier(sb.toString(), "drawable", getPackageName());
-                    pokemonUpdate.setImageResource(id);
+                    int id = rand.nextInt(802)+1;
+                    Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(pokemonUpdate);
+                    Pokemon p = null;
                     try {
-                        collections.getPokemon("292");
+                        p = collections.getPokemon(String.valueOf(id));
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if(p!=null){
+                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
+                    }
+//                    if(getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE) == null){
+//                        SharedPreferences.Editor SFE = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE).edit();
+//                        JSONArray pokeJsonArray = new JSONArray();
+//                        JSONObject pokeJsonObject = new JSONObject();
+//                        try {
+//                            pokeJsonObject.put("name", p.getName());
+//                            pokeJsonObject.put("id", p.getNumber());
+//                            pokeJsonArray.put(pokeJsonObject);
+//                            SFE.putString("pokeJsonString", pokeJsonArray.toString());
+//                            SFE.commit();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    else{
+//                        SharedPreferences pokemonSharedPreferences = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE);
+//                        String pokeJsonString = pokemonSharedPreferences.getString("pokeJsonString", "");
+//                        try {
+//                            JSONArray pokeJsonArray = new JSONArray(pokeJsonString);
+//                            JSONObject pokeJsonObject = new JSONObject();
+//                            pokeJsonObject.put("name", p.getName());
+//                            pokeJsonObject.put("id", p.getNumber());
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
                     //collections.obtainData(sb.toString());
                     Toast.makeText(Start.this, "Pokemon added to Collections!", Toast.LENGTH_LONG).show();
                 }
