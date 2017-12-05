@@ -185,9 +185,9 @@ public class Start extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-//                    if(p!=null){
-//                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
-//                    }
+                    if(p!=null){
+                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
+                    }
 //                    if(getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE) == null){
 //                        SharedPreferences.Editor SFE = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE).edit();
 //                        JSONArray pokeJsonArray = new JSONArray();
@@ -215,7 +215,7 @@ public class Start extends AppCompatActivity {
 //                        }
 //                    }
                     //collections.obtainData(sb.toString());
-                    Toast.makeText(Start.this, "Pokemon added to Collections!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
                 }
             }.start();
 

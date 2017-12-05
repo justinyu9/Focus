@@ -66,10 +66,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 //        });
         fetchPokemon fetch = new fetchPokemon();
         fetch.delegate=this;
-        fetch.execute(id);
-        while(p==null){
-            Log.i("POKEMON", "Pokemon is null");
-        }
+        p = fetch.execute(id).get();
         return p;
     }
 
