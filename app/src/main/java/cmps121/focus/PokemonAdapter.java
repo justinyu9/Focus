@@ -102,7 +102,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Pokemon p = pokeList.get(position);
-        Log.i("POKENUMBER", String.valueOf(p.getNumber()));
+        Log.i("POKENUMBER", String.valueOf(p.getID()));
         holder.numberTextView.setText(p.getName());
         Glide.with(context).load("http://pokeapi.co/media/sprites/pokemon/" + p.getID() + ".png").centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.photoImageView);
     }

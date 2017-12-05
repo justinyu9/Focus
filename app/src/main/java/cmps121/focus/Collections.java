@@ -49,8 +49,8 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
     public Pokemon getPokemon(String id) throws ExecutionException, InterruptedException {
         fetchPokemon fetch = new fetchPokemon();
         fetch.delegate=this;
-        Pokemon p = fetch.execute(id).get();
-        if(p==null){
+        fetch.execute(id);
+        while(p==null){
             Log.i("POKEMON", "Pokemon is null");
         }
         return p;
