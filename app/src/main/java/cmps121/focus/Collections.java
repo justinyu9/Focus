@@ -45,6 +45,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
     Context context;
     public ArrayList<Pokemon> pokeList;
     Pokemon p;
+    Pokemon test;
     String url = "http://pokeapi.co/api/v2/pokemon/";
     public Collections() {
     }
@@ -66,7 +67,8 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 //        });
         fetchPokemon fetch = new fetchPokemon();
         fetch.delegate=this;
-        p = fetch.execute(id).get();
+        //fetch.execute();
+        p=fetch.execute(id).get();
         return p;
     }
 
@@ -83,7 +85,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
 
-        retrofit = new Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/").addConverterFactory(GsonConverterFactory.create()).build();
+        //retrofit = new Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/").addConverterFactory(GsonConverterFactory.create()).build();
 
         pokeList = new ArrayList<Pokemon>();
         pokemonDatabase = new PokemonDatabase(this);
@@ -95,6 +97,11 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
             Pokemon pok = new Pokemon();
             pok.setName(res.getString(0));
             pok.setNumber(res.getString(1));
+            pok.setHp(res.getString(2));
+            pok.setAttack(res.getString(3));
+            pok.setDefense(res.getString(4));
+            pok.setHeight(res.getString(5));
+            pok.setWeight(res.getString(6));
             pokeList.add(pok);
         }
         adapter.addListOfPokemons(pokeList);
@@ -148,6 +155,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 
     @Override
     public void onResponseReceived(Pokemon result) {
+        Log.i("POKEMON", "Pokemon callback async task " + result.getName());
         p = result;
     }
 
@@ -159,7 +167,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 
         @Override
         protected Pokemon doInBackground(String... voids) {
-            //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             pokemonId = voids[0];
             Log.i("POKEMON", "doInBackground at fetchPokemon");
             Pokemon p = new Pokemon();
@@ -177,7 +185,17 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
                 JSONObject JO = new JSONObject(data);
                 p.setName((String)JO.get("name"));
                 p.setNumber(String.valueOf(JO.get("id")));
-                Log.i("POKEMON", "Pokemon name: " + JO.get("name") + " abilities: " + JO.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").get("name"));
+                p.setHeight(String.valueOf(JO.get("height")));
+                p.setWeight(String.valueOf(JO.get("weight")));
+                p.setBaseExperience(String.valueOf(JO.get("base_experience")));
+                p.setHp(String.valueOf(Integer.valueOf(p.getHeight()) * Integer.valueOf(p.getWeight())));
+                p.setAttack(String.valueOf(Math.round(Integer.valueOf(p.getHp())/2)));
+                p.setDefense(String.valueOf(Math.round(Integer.valueOf(p.getBaseExperience())/2)));
+                Log.i("POKEMON", "Pokemon name: " + JO.get("name") + "\n" +
+                        " abilities: " + JO.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").get("name") + "\n" +
+                        " height: " + String.valueOf(JO.get("height")) + "\n" +
+                        " weight: " + String.valueOf(JO.get("weight"))
+                );
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -191,6 +209,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 
         @Override
         protected void onPostExecute(Pokemon p) {
+            Log.i("POKEMON", p.getName());
             delegate.onResponseReceived(p);
         }
 

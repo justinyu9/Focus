@@ -13,6 +13,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
@@ -140,13 +141,33 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new LovelyCustomDialog(context)
-                            .setView(R.layout.pokemon_info)
-                            .setTopColor(R.drawable.pokemon_gradient)
-                            .setIcon(photoImageView.getDrawable())
-                            .setTitle(p.getName())
-                            .setMessage("ID: " + p.getID())
+                    LayoutInflater factory = LayoutInflater.from(context);
+                    View pokeView = factory.inflate(R.layout.pokemon_info, null);
+                    ImageView pokeImageView = pokeView.findViewById(R.id.pokeImageView);
+                    TextView hp = pokeView.findViewById(R.id.hp);
+                    TextView attack = pokeView.findViewById(R.id.attack);
+                    TextView height = pokeView.findViewById(R.id.height);
+                    TextView weight = pokeView.findViewById(R.id.weight);
+                    TextView defense = pokeView.findViewById(R.id.defense);
+                    TextView pokeInfoName = pokeView.findViewById(R.id.pokeInfoName);
+
+                    pokeImageView.setImageDrawable(photoImageView.getDrawable());
+                    attack.setText("Attack: " + p.getAttack());
+                    pokeInfoName.setText(p.getName());
+                    hp.setText("HP: " + p.getHp());
+                    height.setText("Height: " + p.getHeight());
+                    weight.setText("Weight: " + p.getWeight());
+                    defense.setText("Defense: " + p.getDefense());
+                    new MaterialDialog.Builder(context)
+                            .customView(pokeView, true)
                             .show();
+//                    new LovelyCustomDialog(context)
+//                            //.setView(R.layout.pokemon_info)
+//                            .setTopColor(R.drawable.pokemon_gradient)
+//                            .setIcon(photoImageView.getDrawable())
+//                            .setTitle(p.getName())
+//                            .setMessage("ID: " + p.getID() + "\n" + p.getID())
+//                            .show();
                 }
             });
         }
