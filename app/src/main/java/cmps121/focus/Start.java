@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,6 +182,7 @@ public class Start extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
+                    Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                     ms = 0;
                     updateTimer();
                     countdownProgress.setProgress((int)ms);
