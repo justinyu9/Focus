@@ -187,7 +187,7 @@ public class Start extends AppCompatActivity {
                     updateTimer();
                     countdownProgress.setProgress((int)ms);
                     ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                    int id = rand.nextInt(802)+1;
+                    int id = rand.nextInt(150)+1;
                     pokemonUpdate.setBackgroundResource(R.drawable.pokemon_gradient_circle);
                     Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(500,500).into(pokemonUpdate);
                     Pokemon p = null;
