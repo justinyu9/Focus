@@ -30,6 +30,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class Start extends AppCompatActivity {
     public CountDownTimer countDownTimer;
@@ -168,6 +169,13 @@ public class Start extends AppCompatActivity {
                     sb.append(String.valueOf(n));
                     int id = getResources().getIdentifier(sb.toString(), "drawable", getPackageName());
                     pokemonUpdate.setImageResource(id);
+                    try {
+                        collections.getPokemon("292");
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     //collections.obtainData(sb.toString());
                     Toast.makeText(Start.this, "Pokemon added to Collections!", Toast.LENGTH_LONG).show();
                 }

@@ -42,6 +42,21 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 
     private Retrofit retrofit;
 
+    public void getPokemon(String id) throws ExecutionException, InterruptedException {
+//        fetchPokemon fetch = new fetchPokemon();
+//        fetch.delegate=this;
+//        p = fetch.execute(id).get();
+//
+////        Log.i("POKEMON ON COLLECTIONS.JAVA", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());
+////        while(p==null){
+////            Log.i("POKEMON", "Waiting for pokemon...");
+////        }
+//        if(p!=null){
+//            Log.i("POKEMON", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());;
+//            adapter.addPokemonToGrid(p);
+//        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,23 +71,19 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         recyclerView.setLayoutManager(layoutManager);
 
         retrofit = new Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/").addConverterFactory(GsonConverterFactory.create()).build();
-        obtainData();
-        fetchPokemon fetch = new fetchPokemon();
-        fetch.delegate=this;
+        //obtainData();
+        fetchPokemon fetchPokemon = new fetchPokemon();
+        fetchPokemon.delegate = this;
         try {
-            fetch.execute("292").get();
+            p = fetchPokemon.execute("141").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-//        Log.i("POKEMON ON COLLECTIONS.JAVA", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());
-        if(p == null){
-            Log.i("POKEMON", "Pokemon is null");
-        }
-        else{
-            Log.i("POKEMON", "Pokemon name: " + p.getName() + " Pokemon id: " + p.getID());
+        if(p!=null){
+            Log.i("POKEMON", "Successful");
+            adapter.addPokemonToGrid(p);
         }
 
 //        gridView = (GridView) findViewById(R.id.pokemonGrid);
