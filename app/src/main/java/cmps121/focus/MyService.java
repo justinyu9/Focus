@@ -86,8 +86,6 @@ public class MyService extends Service {
 
                 if(text.equals("true")){
                     notificationCaller();
-                    Toast.makeText(MyService.this, ("Get back on task!"), Toast.LENGTH_LONG).show();
-
                 }
                 if(ms > 0){
                     ms -= 1000;

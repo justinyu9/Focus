@@ -97,7 +97,7 @@ public class input_info extends AppCompatActivity{
                         // open myfilename.txt for writing
 
 
-                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test8.txt", MODE_APPEND));
+                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test9.txt", MODE_APPEND));
 
                         // write the contents to the file
                         String temp = taskName;

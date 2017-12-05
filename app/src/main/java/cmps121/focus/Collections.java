@@ -1,7 +1,13 @@
 package cmps121.focus;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Collections extends AppCompatActivity implements PokemonInterface{
 
+
 //    GridView gridView;
     RecyclerView recyclerView;
     PokemonAdapter adapter;
@@ -46,6 +53,34 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
     public ArrayList<Pokemon> pokeList;
     Pokemon p;
     String url = "http://pokeapi.co/api/v2/pokemon/";
+    public void notificationCaller() {
+        Intent intent = new Intent(this, Start.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
+
+        String channel00= "channel00";
+        NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(channel00, "channelName", NotificationManager.IMPORTANCE_HIGH);
+        channel.enableLights(true);
+        channel.enableVibration(true);
+        channel.setLightColor(R.color.colorPrimary);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        nManager.createNotificationChannel(channel);
+
+        android.support.v4.app.NotificationCompat.Builder NB =new android.support.v4.app.NotificationCompat.Builder(getApplicationContext())
+                .setContentTitle("Your egg is dying!")
+                .setContentText("Click here to save it!")
+                .setChannelId(channel00)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setColor(getResources().getColor(R.color.colorAccent))
+                .setContentIntent(pi);
+
+        nManager.notify(1, NB.build());
+//        mNH = new NotficationHelper(this);
+//        android.support.v4.app.NotificationCompat.Builder nb = mNH.getChannelNotification("Your egg is dying!", "Click here to save it");
+//        mNH.getNotificationManager().notify(1, nb.build());
+    }
     public Collections() {
     }
 
@@ -76,6 +111,10 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collections);
 
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "false");
+        e2.apply();
+        
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new PokemonAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -192,6 +231,32 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         protected void onPostExecute(Pokemon p) {
             delegate.onResponseReceived(p);
         }
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "true");
+        e2.apply();
+        notificationCaller();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "true");
+        e2.apply();
+        notificationCaller();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "false");
+        e2.apply();
 
     }
 }
