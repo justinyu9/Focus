@@ -108,7 +108,7 @@ public class Start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        collections = new Collections(this);
+        collections = new Collections();
         pokemonDatabase = new PokemonDatabase(this);
 
         SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);

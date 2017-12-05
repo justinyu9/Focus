@@ -41,8 +41,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
     Context context;
     public ArrayList<Pokemon> pokeList;
     Pokemon p;
-    public Collections(Context context) {
-        this.context = context;
+    public Collections() {
     }
 
     private Retrofit retrofit;
@@ -73,7 +72,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
         retrofit = new Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/").addConverterFactory(GsonConverterFactory.create()).build();
 
         pokeList = new ArrayList<Pokemon>();
-        pokemonDatabase = new PokemonDatabase(context);
+        pokemonDatabase = new PokemonDatabase(this);
         Cursor res = pokemonDatabase.getAllData();
         if(res.getCount() == 0){
             Log.e("POKEMON", "Database is empty");
