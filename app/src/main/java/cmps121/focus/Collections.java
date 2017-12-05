@@ -10,6 +10,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,12 +45,25 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
     Context context;
     public ArrayList<Pokemon> pokeList;
     Pokemon p;
+    String url = "http://pokeapi.co/api/v2/pokemon/";
     public Collections() {
     }
 
     private Retrofit retrofit;
 
     public Pokemon getPokemon(String id) throws ExecutionException, InterruptedException {
+//        url += id;
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
         fetchPokemon fetch = new fetchPokemon();
         fetch.delegate=this;
         fetch.execute(id);

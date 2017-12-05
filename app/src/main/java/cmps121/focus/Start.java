@@ -185,9 +185,9 @@ public class Start extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(p!=null){
-                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
-                    }
+//                    if(p!=null){
+//                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
+//                    }
 //                    if(getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE) == null){
 //                        SharedPreferences.Editor SFE = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE).edit();
 //                        JSONArray pokeJsonArray = new JSONArray();
