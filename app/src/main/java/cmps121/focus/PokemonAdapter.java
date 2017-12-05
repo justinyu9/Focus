@@ -150,7 +150,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                     TextView weight = pokeView.findViewById(R.id.weight);
                     TextView defense = pokeView.findViewById(R.id.defense);
                     TextView pokeInfoName = pokeView.findViewById(R.id.pokeInfoName);
-
+                    
                     pokeImageView.setImageDrawable(photoImageView.getDrawable());
                     attack.setText("Attack: " + p.getAttack());
                     pokeInfoName.setText(p.getName());
