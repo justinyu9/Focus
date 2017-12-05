@@ -159,6 +159,7 @@ public class Collections extends AppCompatActivity implements PokemonInterface{
 
         @Override
         protected Pokemon doInBackground(String... voids) {
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             pokemonId = voids[0];
             Log.i("POKEMON", "doInBackground at fetchPokemon");
             Pokemon p = new Pokemon();

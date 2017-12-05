@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -50,6 +52,7 @@ public class Start extends AppCompatActivity {
     public StringBuffer sb = new StringBuffer(pokemon);
     public PokemonDatabase pokemonDatabase;
     public Collections collections;
+    public int count = 0;
 
 
     public void notificationCaller() {
@@ -143,6 +146,7 @@ public class Start extends AppCompatActivity {
 
                 @Override
                 public void onTick(long time) {
+                    count++;
                     if(ms < temp/4 && ms > 0){
                         ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
                         pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_3);
@@ -154,6 +158,12 @@ public class Start extends AppCompatActivity {
                     else if(ms < temp - temp/4 && ms > 0){
                         ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
                         pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_1);
+                    }
+                    if(count == 4){
+                        count = 0;
+                        Animation wobble = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.wobble);
+                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+                        pokemonUpdate.startAnimation(wobble);
                     }
                     if(ms > 0){
                         ms -= 1000;
@@ -176,7 +186,8 @@ public class Start extends AppCompatActivity {
                     countdownProgress.setProgress((int)ms);
                     ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
                     int id = rand.nextInt(802)+1;
-                    Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(pokemonUpdate);
+                    pokemonUpdate.setBackgroundResource(R.drawable.pokemon_gradient_circle);
+                    Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(500,500).into(pokemonUpdate);
                     Pokemon p = null;
                     try {
                         p = collections.getPokemon(String.valueOf(id));
