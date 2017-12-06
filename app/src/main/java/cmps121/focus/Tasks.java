@@ -264,6 +264,12 @@ public class Tasks extends AppCompatActivity {
         return false;
     }
 
+    public void goToCollections(View v){
+        Intent intent = new Intent(this, Collections.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume(){
         super.onResume();
