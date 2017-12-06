@@ -14,7 +14,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.OutputStreamWriter;
 
-public class input_info extends AppCompatActivity {
+public class input_info extends AppCompatActivity{
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,9 @@ public class input_info extends AppCompatActivity {
 
         //create a list of items for the spinner.
         String[] items3 = new String[]{"Pick Type","Class","Work","Errands","Custom"};
-        String[] items = new String[]{"Takes","5 minutes","10 minutes","15 minutes","30 minutes","1 hour","1.5 hours","2 hours","CUSTOM"};
+        String[] items = new String[]{"Takes","5 minutes","10 minutes","15 minutes","30 minutes","1 hour","1.5 hours","2 hours"};
         String[] items1 = new String[]{"Due in","1 Day","2-3 Days","a week","2-3 weeks","a month","2 months","a year",};
-        String[] items2 = new String[]{"Pick Reminder","10 min before","30 min before","1 hr before","2 hrs before","Custom"};
+        String[] items2 = new String[]{"Pick Reminder","10 min before","30 min before","1 hr before","2 hrs before"};
         String[] items4 = new String[]{"1 = easy, 10 = hard ","1","2","3","4","5", "6", "7", "8", "9", "10"};
         String[] items5 = new String[]{"1 = not very, 10 = very","1","2","3","4","5", "6", "7", "8", "9", "10"};
 
@@ -96,16 +97,16 @@ public class input_info extends AppCompatActivity {
                         // open myfilename.txt for writing
 
 
-                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test4.txt", MODE_APPEND));
+                        OutputStreamWriter out = new OutputStreamWriter(openFileOutput("Test9.txt", MODE_APPEND));
 
                         // write the contents to the file
                         String temp = taskName;
                         SharedPreferences read = getSharedPreferences(temp, MODE_PRIVATE);
                         boolean compare = read.contains("deleted");
-                            if(!compare) {
-                                out.write(temp);
-                                out.write("\n");
-                            }
+                        if(!compare) {
+                            out.write(temp);
+                            out.write("\n");
+                        }
 
                         //System.out.print(cells);
 
@@ -123,6 +124,14 @@ public class input_info extends AppCompatActivity {
 
                     }
 
+                    int a = getDue(dueTime);
+                    int b = getDifficulty(difficulty);
+                    int c = getImportance(importance);
+                    int d = getTime(startTime);
+
+
+                    counter = (a+b+c+d);
+                    String counter2 = String.valueOf(counter);
 
                     SharedPreferences.Editor e = getSharedPreferences(taskName, MODE_PRIVATE).edit();
                     e.putString("time", startTime);
@@ -132,6 +141,7 @@ public class input_info extends AppCompatActivity {
                     e.putString("importance", importance);
                     e.putString("reminder", remindTime);
                     e.putString("deleted", "False");
+                    e.putString("priority", counter2);
                     e.apply();
 
                     // finish(); //return to home
@@ -145,5 +155,85 @@ public class input_info extends AppCompatActivity {
                 }
             }
         });
+
+
+    }
+    public static int getTime(String A){
+        int x = 0;
+        if(A.equals("Takes")){
+
+        }
+        if(A.equals("5 minutes")){
+            x=100;
+        }
+        if(A.equals("10 minutes")){
+            x=80;
+        }
+        if(A.equals("15 minutes")){
+            x=50;
+        }
+        if(A.equals("30 minutes")){
+            x=40;
+        }
+        if(A.equals("1 hour")){
+            x=20;
+        }
+        if(A.equals("1.5 hours")){
+            x=15;
+        }
+        if(A.equals("2 hours")){
+            x=10;
+        }
+
+        return x;
+    }
+    public static int getDue(String A){
+        int x = 0;
+        if(A.equals("Due in")){
+
+        }
+        if(A.equals("1 Day")){
+            x=1000;
+        }
+        if(A.equals("2-3 Days")){
+            x=750;
+        }
+        if(A.equals("a week")){
+            x=500;
+        }
+        if(A.equals("2-3 weeks")){
+            x=200;
+        }
+        if(A.equals("a month")){
+            x=150;
+        }
+        if(A.equals("2 months")){
+            x=100;
+        }
+        if(A.equals("a year")){
+            x=10;
+        }
+        return x;
+    }
+    public static int getDifficulty(String A){
+        int x = 0;
+        if(A.equals("1 = easy, 10 = hard ")){
+
+        }
+        else{
+            x = Integer.parseInt(A);
+        }
+        return x;
+    }
+    public static int getImportance(String A){
+        int x = 0;
+        if(A.equals("1 = not very, 10 = very")){
+
+        }
+        else{
+            int y = Integer.parseInt(A);
+            x = y*10;
+        }
+        return x;
     }
 }

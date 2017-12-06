@@ -1,5 +1,6 @@
 package cmps121.focus;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -91,10 +92,19 @@ public class Start extends AppCompatActivity {
         Toast.makeText(Start.this, "Finished!", Toast.LENGTH_LONG).show();
         SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);
         String text = read.getString("taskAtHand", "No name defined");
-        SharedPreferences.Editor e = getSharedPreferences(text, MODE_PRIVATE).edit();
-        e.putString("deleted", "true");
-        e.apply();
-        Intent intent = new Intent(Start.this, Tasks.class);
+        SharedPreferences.Editor e2 = getSharedPreferences(text, MODE_PRIVATE).edit();
+        e2.putString("deleted", "true");
+        e2.apply();
+
+        e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "false");
+        e2.apply();
+
+        read = getSharedPreferences("ClickedStart", MODE_PRIVATE);
+        text = read.getString("start", "No name defined");
+
+//        else {
+        Intent intent = new Intent(Start.this, cmps121.focus.Tasks.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);
@@ -114,6 +124,10 @@ public class Start extends AppCompatActivity {
         collections = new Collections();
         pokemonDatabase = new PokemonDatabase(this);
 
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "false");
+        e2.apply();
+
         SharedPreferences read = getSharedPreferences("taskAtHand", MODE_PRIVATE);
         String text = read.getString("taskAtHand", "No name defined");
         String time = read.getString("time", "No name defined");
@@ -128,107 +142,87 @@ public class Start extends AppCompatActivity {
         String hour = time.split(" ")[1];
 
         if(hour.equals("minutes")){
-            ms = (long) timeInt * 60000;
-            temp = (long) timeInt * 60000;
+            ms = (long) (timeInt * 60000);
+            temp = (long) (timeInt * 60000);
         }
         else {
-            ms = (long) timeInt * 3600000;
-            temp = (long) timeInt * 3600000;
+            ms = (long) (timeInt * 3600000);
+            temp = (long) (timeInt * 3600000);
         }
         final ProgressBar countdownProgress = findViewById(R.id.progressBar);
         countdownProgress.setMax((int) temp);
-        ms = getTime();
+        //ms = getTime();
         final Button myButton = (Button) findViewById(R.id.finished);
         myButton.setEnabled(false);
 
-            countDownTimer = new CountDownTimer(ms, 1000) {
+        countDownTimer = new CountDownTimer(ms, 1000) {
+            SharedPreferences read = getSharedPreferences("Leaving", MODE_PRIVATE);
+            String text = read.getString("left", "No name defined");
 
-
-                @Override
-                public void onTick(long time) {
-                    count++;
-                    if(ms < temp/4 && ms > 0){
-                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                        pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_3);
+            @Override
+            public void onTick(long time) {
+				count++;
+				if(count == 4){
+					count = 0;
+					Animation wobble = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.wobble);
+					ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+					pokemonUpdate.startAnimation(wobble);
+				}
+                if(ms%5000 ==0){
+                    if(text.equals(true)){
+                        notificationCaller();
                     }
-                    else if(ms < temp - temp/2 && ms > 0){
-                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                        pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_2);
-                    }
-                    else if(ms < temp - temp/4 && ms > 0){
-                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                        pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_1);
-                    }
-                    if(count == 4){
-                        count = 0;
-                        Animation wobble = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.wobble);
-                        ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                        pokemonUpdate.startAnimation(wobble);
-                    }
-                    if(ms > 0){
-                        ms -= 1000;
-                        updateTimer();
-                        countdownProgress.setProgress((int)ms);
-                    }
-                    else{
-                        myButton.setAlpha(1.0f);
-                        myButton.setEnabled(true);
-                        onFinish();
-                        countDownTimer.cancel();
-                    }
-
                 }
-
-                @Override
-                public void onFinish() {
-                    ms = 0;
+                if(ms < temp/4 && ms > 0){
+                    ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+                    pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_3);
+                }
+                else if(ms < temp - temp/2 && ms > 0){
+                    ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+                    pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_2);
+                }
+                else if(ms < temp - temp/4 && ms > 0){
+                    ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+                    pokemonUpdate.setImageResource(R.drawable.pokemon_egg_crack_1);
+                }
+                if(ms > 0){
+                    ms -= 1000;
                     updateTimer();
                     countdownProgress.setProgress((int)ms);
-                    ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-                    int id = rand.nextInt(802)+1;
-                    pokemonUpdate.setBackgroundResource(R.drawable.pokemon_gradient_circle);
-                    Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(500,500).into(pokemonUpdate);
-                    Pokemon p = null;
-                    try {
-                        p = collections.getPokemon(String.valueOf(id));
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(p!=null){
-                        pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
-                    }
-//                    if(getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE) == null){
-//                        SharedPreferences.Editor SFE = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE).edit();
-//                        JSONArray pokeJsonArray = new JSONArray();
-//                        JSONObject pokeJsonObject = new JSONObject();
-//                        try {
-//                            pokeJsonObject.put("name", p.getName());
-//                            pokeJsonObject.put("id", p.getNumber());
-//                            pokeJsonArray.put(pokeJsonObject);
-//                            SFE.putString("pokeJsonString", pokeJsonArray.toString());
-//                            SFE.commit();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    else{
-//                        SharedPreferences pokemonSharedPreferences = getSharedPreferences("PokemonSharedPreferences", MODE_PRIVATE);
-//                        String pokeJsonString = pokemonSharedPreferences.getString("pokeJsonString", "");
-//                        try {
-//                            JSONArray pokeJsonArray = new JSONArray(pokeJsonString);
-//                            JSONObject pokeJsonObject = new JSONObject();
-//                            pokeJsonObject.put("name", p.getName());
-//                            pokeJsonObject.put("id", p.getNumber());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-                    //collections.obtainData(sb.toString());
-                    Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
                 }
-            }.start();
+                else{
+                    myButton.setAlpha(1.0f);
+                    myButton.setEnabled(true);
+                    onFinish();
+                    countDownTimer.cancel();
+                }
+
+            }
+
+            @Override
+            public void onFinish() {
+                ms = 0;
+                updateTimer();
+                countdownProgress.setProgress((int)ms);
+				ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
+				int id = rand.nextInt(802)+1;
+				pokemonUpdate.setBackgroundResource(R.drawable.pokemon_gradient_circle);
+				Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(500,500).into(pokemonUpdate);
+				Pokemon p = null;
+				try {
+					p = collections.getPokemon(String.valueOf(id));
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if(p!=null){
+					pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
+				}
+
+                Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
+            }
+        }.start();
 
 
     }
@@ -240,7 +234,7 @@ public class Start extends AppCompatActivity {
     public void updateTimer(){
         TextView timerView = findViewById(R.id.timerView);
         int hour = (int) ms / 3600000;
-        int minutes = (int) ms / 60000;
+        int minutes = (int) (ms-(hour*3600000)) / 60000;
         int seconds = (int) ms % 60000 / 1000;
 
         String timeLeft = "";
@@ -262,7 +256,45 @@ public class Start extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "true");
+        e2.apply();
         notificationCaller();
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "true");
+        e2.apply();
+        notificationCaller();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences.Editor e2 = getSharedPreferences("Leaving", MODE_PRIVATE).edit();
+        e2.putString("left", "false");
+        e2.apply();
+
+    }
+    public void startService(View view){
+        Intent intent = new Intent(this,MyService.class);
+        startService(intent);
+    }
+    public void stopService(View view){
+        Intent intent = new Intent(this,MyService.class);
+        stopService(intent);
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
