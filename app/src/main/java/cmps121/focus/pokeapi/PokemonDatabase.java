@@ -17,6 +17,11 @@ public class PokemonDatabase extends SQLiteOpenHelper {
     public static final String TABLE_PRODUCTS = "PokeCollection";
     public static final String COL_1 = "name";
     public static final String COL_2 = "id";
+    public static final String COL_3 = "hp";
+    public static final String COL_4 = "attack";
+    public static final String COL_5 = "defense";
+    public static final String COL_6 = "height";
+    public static final String COL_7 = "weight";
 
     public PokemonDatabase(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -25,7 +30,7 @@ public class PokemonDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_PRODUCTS + "(name TEXT, id TEXT)" );
+        db.execSQL("create table " + TABLE_PRODUCTS + "(name TEXT, id TEXT, hp TEXT, attack TEXT, defense TEXT, height TEXT, weight TEXT)" );
     }
 
     @Override
@@ -34,11 +39,16 @@ public class PokemonDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String name, String id){
+    public boolean insertData(String name, String id, String hp, String attack, String defense, String height, String weight){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, name);
         contentValues.put(COL_2, id);
+        contentValues.put(COL_3, hp);
+        contentValues.put(COL_4, attack);
+        contentValues.put(COL_5, defense);
+        contentValues.put(COL_6, height);
+        contentValues.put(COL_7, weight);
         long result = db.insert(TABLE_PRODUCTS, null, contentValues);
         if(result==-1)
             return false;

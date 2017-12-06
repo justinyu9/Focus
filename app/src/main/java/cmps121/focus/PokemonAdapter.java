@@ -1,5 +1,6 @@
 package cmps121.focus;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -8,11 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.yarolegovich.lovelydialog.LovelyCustomDialog;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
 import java.util.ArrayList;
 
@@ -77,6 +82,7 @@ import java.util.ArrayList;
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder>{
     private ArrayList<Pokemon> pokeList;
 
+
     public PokemonAdapter(Context context){
         this.context = context;
         pokeList = new ArrayList<>();
@@ -96,6 +102,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_item, parent, false);
+        View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_info, parent, false);
         return new ViewHolder(view);
     }
 
@@ -104,8 +111,10 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         Pokemon p = pokeList.get(position);
         Log.i("POKENUMBER", String.valueOf(p.getID()));
         holder.numberTextView.setText(p.getName());
+        holder.bind(p, pokeList);
         Glide.with(context).load("http://pokeapi.co/media/sprites/pokemon/" + p.getID() + ".png").centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.photoImageView);
     }
+
 
     @Override
     public int getItemCount() {
@@ -113,15 +122,55 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        private Pokemon p;
+        private ArrayList<Pokemon> pokeList;
         private ImageView photoImageView;
         private TextView numberTextView;
+
+        public void bind(Pokemon p, ArrayList<Pokemon> pokeList){
+            this.p = p;
+            this.pokeList = pokeList;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             photoImageView = itemView.findViewById(R.id.imgPokemon);
             numberTextView = itemView.findViewById(R.id.pokeName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LayoutInflater factory = LayoutInflater.from(context);
+                    View pokeView = factory.inflate(R.layout.pokemon_info, null);
+                    ImageView pokeImageView = pokeView.findViewById(R.id.pokeImageView);
+                    TextView hp = pokeView.findViewById(R.id.hp);
+                    TextView attack = pokeView.findViewById(R.id.attack);
+                    TextView height = pokeView.findViewById(R.id.height);
+                    TextView weight = pokeView.findViewById(R.id.weight);
+                    TextView defense = pokeView.findViewById(R.id.defense);
+                    TextView pokeInfoName = pokeView.findViewById(R.id.pokeInfoName);
+
+                    pokeImageView.setImageDrawable(photoImageView.getDrawable());
+                    attack.setText("Attack: " + p.getAttack());
+                    pokeInfoName.setText(p.getName());
+                    pokeInfoName.setAllCaps(true);
+                    hp.setText("HP: " + p.getHp());
+                    height.setText("Height: " + p.getHeight());
+                    weight.setText("Weight: " + p.getWeight());
+                    defense.setText("Defense: " + p.getDefense());
+                    new MaterialDialog.Builder(context)
+                            .customView(pokeView, true)
+                            .show();
+//                    new LovelyCustomDialog(context)
+//                            //.setView(R.layout.pokemon_info)
+//                            .setTopColor(R.drawable.pokemon_gradient)
+//                            .setIcon(photoImageView.getDrawable())
+//                            .setTitle(p.getName())
+//                            .setMessage("ID: " + p.getID() + "\n" + p.getID())
+//                            .show();
+                }
+            });
         }
     }
 }

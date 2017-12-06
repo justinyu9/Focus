@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -201,11 +202,12 @@ public class Start extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                ms = 0;
-                updateTimer();
-                countdownProgress.setProgress((int)ms);
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+				ms = 0;
+				updateTimer();
+				countdownProgress.setProgress((int)ms);
 				ImageView pokemonUpdate = findViewById(R.id.egg_pokemon);
-				int id = rand.nextInt(802)+1;
+				int id = rand.nextInt(150)+1;
 				pokemonUpdate.setBackgroundResource(R.drawable.pokemon_gradient_circle);
 				Glide.with(getApplicationContext()).load("http://pokeapi.co/media/sprites/pokemon/" + String.valueOf(id) + ".png").crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(500,500).into(pokemonUpdate);
 				Pokemon p = null;
@@ -217,10 +219,10 @@ public class Start extends AppCompatActivity {
 					e.printStackTrace();
 				}
 				if(p!=null){
-					pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()));
+					Log.i("POKEMON", p.getAttack());
+					pokemonDatabase.insertData(p.getName(), String.valueOf(p.getID()), p.getHp(), p.getAttack(), p.getDefense(), p.getHeight(), p.getWeight());
 				}
-
-                Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
+				Toast.makeText(Start.this, p.getName() + " has been added to your collections!", Toast.LENGTH_LONG).show();
             }
         }.start();
 
