@@ -56,6 +56,11 @@ public class PokemonDatabase extends SQLiteOpenHelper {
             return true;
     }
 
+    public void deleteData(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PRODUCTS, "ID = ?", new String[] {name});
+    }
+
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_PRODUCTS, null);

@@ -2,6 +2,7 @@ package cmps121.focus;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,9 @@ import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import cmps121.focus.pokeapi.PokemonDatabase;
 
 /**
  * Created by Alston-PC on 12/2/2017.
@@ -99,10 +104,21 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void deletePokemon(Pokemon p){
+        for(int i=0; i<pokeList.size(); i++){
+            Pokemon delete = pokeList.get(i);
+            if((delete.getName()).equals(p.getName())){
+                pokeList.remove(i);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_item, parent, false);
-        View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_info, parent, false);
+        //View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_info, parent, false);
         return new ViewHolder(view);
     }
 
@@ -144,12 +160,25 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                     LayoutInflater factory = LayoutInflater.from(context);
                     View pokeView = factory.inflate(R.layout.pokemon_info, null);
                     ImageView pokeImageView = pokeView.findViewById(R.id.pokeImageView);
+                    Button releasePokemon = pokeView.findViewById(R.id.releasePokemon);
                     TextView hp = pokeView.findViewById(R.id.hp);
                     TextView attack = pokeView.findViewById(R.id.attack);
                     TextView height = pokeView.findViewById(R.id.height);
                     TextView weight = pokeView.findViewById(R.id.weight);
                     TextView defense = pokeView.findViewById(R.id.defense);
                     TextView pokeInfoName = pokeView.findViewById(R.id.pokeInfoName);
+
+                    releasePokemon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            Intent intent = new Intent(context,Collections.class);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            context.startActivity(intent);
+                            deletePokemon(p);
+                            PokemonDatabase db = new PokemonDatabase(context);
+                            db.deleteData(p.getName());
+                        }
+                    });
 
                     pokeImageView.setImageDrawable(photoImageView.getDrawable());
                     attack.setText("Attack: " + p.getAttack());
