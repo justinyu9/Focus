@@ -175,8 +175,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                            context.startActivity(intent);
                             deletePokemon(p);
-                            PokemonDatabase db = new PokemonDatabase(context);
-                            db.deleteData(p.getName());
+//                            PokemonDatabase db = new PokemonDatabase(context);
+//                            db.deleteData(p.getName());
                         }
                     });
 
